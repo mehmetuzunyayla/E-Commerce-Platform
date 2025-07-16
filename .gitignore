@@ -1,0 +1,73 @@
+# Root (covers both client and server)
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+coverage/
+.tmp/
+temp/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# IDEs/editors
+.vscode/
+.idea/
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Uploaded files
+uploads/
+public/uploads/
+
+# Dependency directories in subfolders
+client/node_modules/
+server/node_modules/
+
+# Build artifacts in subfolders
+client/.next/
+client/out/
+client/.env
+server/dist/
+server/.env
+
+# Test & coverage
+coverage/
+client/coverage/
+server/coverage/
+
+# Debug
+debug.log
+npm-debug.log*
+yarn-error.log*
+
+# Misc
+*.local
+
+
+
+info.txt
+api_text.txt

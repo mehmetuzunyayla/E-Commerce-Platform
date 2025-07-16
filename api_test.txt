@@ -1,0 +1,101 @@
+API Testing Checklist
+1. Authentication & User Flows
+ Register new user (customer)
+
+ Verify email (if required)
+
+ Login (receive JWT)
+
+ Access protected route with valid JWT
+
+ Access protected route with invalid/expired JWT (should fail)
+
+ Attempt admin route as customer (should fail)
+
+ Password reset request (when implemented)
+
+ Password reset completion (when implemented)
+
+2. User Profile
+ Get own profile (GET /users/me)
+
+ Update own profile
+
+ Add/update/delete addresses
+
+3. Product
+ List products (public, no auth)
+
+ Get product by ID (public)
+
+ [Admin] Create product
+
+ [Admin] Update product
+
+ [Admin] Delete product
+
+ Upload product image (admin)
+
+4. Category
+ List categories (public)
+
+ [Admin] Create category
+
+ [Admin] Update category
+
+ [Admin] Delete category
+
+ Upload category image (admin)
+
+5. Cart
+ Add product to cart
+
+ Update product quantity in cart
+
+ Remove product from cart
+
+ View cart contents
+
+ Empty cart
+
+6. Order
+ Create order from cart
+
+ List user’s orders
+
+ Get order details
+
+ [Admin] List all orders
+
+ [Admin] Update order status
+
+7. Review
+ Create review for product
+
+ Update/delete own review
+
+ [Admin] Approve/reject reviews
+
+ List product reviews
+
+8. Recommendations (if implemented)
+ Get recommendations for user/product
+
+9. Edge Cases & Security
+ Attempt actions without JWT (should fail where protected)
+
+ Use invalid IDs (should fail gracefully)
+
+ Attempt to delete/update others’ data (should fail)
+
+ Upload invalid file types/oversized files (should fail)
+
+ Test all error messages (clear, no leaks)
+
+Tips
+Use Postman collections or Thunder Client to save requests.
+
+Test with both admin and regular user tokens.
+
+Add sample payloads for each test.
+
