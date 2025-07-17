@@ -2,7 +2,8 @@ import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards, Req } from '@n
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { any } from 'zod';
-
+import { Get, Query, Res } from '@nestjs/common';
+import { Response } from 'express';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -23,6 +24,12 @@ export class AuthController {
   @Post('verify-email')
   async verifyEmail(@Body('token') token: string) {
     return this.authService.verifyEmail(token);
+  }
+  
+  @Get('verify-email')
+  async verifyEmailByGet(@Query('token') token: string, @Res() res: Response) {
+  await this.authService.verifyEmail(token);
+  return res.status(200).send('Email verified successfully! You may now login.');
   }
 
   @UseGuards(JwtAuthGuard)

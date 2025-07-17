@@ -26,7 +26,7 @@ export class AuthService {
     });
 
     // Send verification email
-    const verifyUrl = `${process.env.FRONTEND_URL}/verify-email?token=${emailVerificationToken}`;
+    const verifyUrl = `${process.env.BACKEND_URL}/auth/verify-email?token=${emailVerificationToken}`;
     await this.emailService.sendMail(
       user.email,
       'Verify Your Email',
