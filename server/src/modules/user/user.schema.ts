@@ -6,19 +6,25 @@ export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class Address {
   @Prop({ required: true })
+  label: string;
+
+  @Prop({ required: true })
+  fullName: string;
+
+  @Prop({ required: true })
   street: string;
 
   @Prop({ required: true })
   city: string;
 
   @Prop({ required: true })
-  state: string;
-
-  @Prop({ required: true })
-  postalCode: string;
+  zip: string;
 
   @Prop({ required: true })
   country: string;
+
+  @Prop({ required: true })
+  phone: string;
 }
 
 const AddressSchema = SchemaFactory.createForClass(Address);

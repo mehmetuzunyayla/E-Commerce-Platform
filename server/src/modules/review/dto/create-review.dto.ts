@@ -11,6 +11,10 @@ export const CreateReviewSchema = z.object({
 export type CreateReviewDto = z.infer<typeof CreateReviewSchema>;
 export class CreateReviewZodDto extends createZodDto(CreateReviewSchema) {}
 
-export const UpdateReviewSchema = CreateReviewSchema.partial();
+export const UpdateReviewSchema = z.object({
+  rating: z.number().min(1).max(5).optional(),
+  comment: z.string().optional(),
+});
+
 export type UpdateReviewDto = z.infer<typeof UpdateReviewSchema>;
 export class UpdateReviewZodDto extends createZodDto(UpdateReviewSchema) {}

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards, Req, ForbiddenException, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards, Req, ForbiddenException, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryZodDto, UpdateCategoryZodDto } from './dto/create-category.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -33,7 +33,8 @@ export class CategoryController {
 
   @Get()
   async findAll() {
-    return this.categoryService.findAll();
+    const categories = await this.categoryService.findAll();
+    return categories;
   }
 
   @Get(':id')
@@ -43,16 +44,47 @@ export class CategoryController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Req() req: any, @Body() createCategoryDto: CreateCategoryZodDto) {
+  async create(@Req() req: any, @Body() body: any) {
     if (req.user.role !== 'admin') throw new ForbiddenException('Only admin can create categories');
-    return this.categoryService.create(createCategoryDto);
+    
+    // Manual validation without Zod to avoid version conflicts
+    try {
+      // Basic validation
+      if (!body.name || body.name.length < 2) {
+        throw new BadRequestException('Category name is required and must be at least 2 characters');
+      }
+      
+      return await this.categoryService.create(body);
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      console.error('Category creation error:', error);
+      throw new BadRequestException('Failed to create category');
+    }
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryZodDto, @Req() req: any) {
+  async update(@Param('id') id: string, @Body() body: any, @Req() req: any) {
     if (req.user.role !== 'admin') throw new ForbiddenException('Only admin can update categories');
-    return this.categoryService.update(id, updateCategoryDto);
+    
+    // Manual validation without Zod to avoid version conflicts
+    try {
+      // Basic validation for updates
+      if (body.name !== undefined && body.name.length < 2) {
+        throw new BadRequestException('Category name must be at least 2 characters');
+      }
+      
+      const result = await this.categoryService.update(id, body);
+      return result;
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      console.error('Category update error:', error);
+      throw new BadRequestException('Failed to update category');
+    }
   }
 
   @Delete(':id')

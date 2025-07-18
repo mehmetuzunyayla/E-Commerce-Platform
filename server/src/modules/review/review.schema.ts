@@ -17,8 +17,8 @@ export class Review {
   @Prop()
   comment: string;
 
-  @Prop({ default: false })
-  isApproved: boolean; // Admin approval
+  @Prop({ default: true })
+  isApproved: boolean; // Auto-approved by default
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);

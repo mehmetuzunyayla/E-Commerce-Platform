@@ -17,8 +17,13 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // Serve static files (uploads/images)
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), { prefix: '/uploads/' });
+  // Serve static files (uploads/images) - BEFORE global prefix
+  const uploadsPath = join(__dirname, '..', '..', 'uploads');
+
+  app.useStaticAssets(uploadsPath, { prefix: '/uploads/' });
+
+  // Set global prefix for API routes
+  app.setGlobalPrefix('api');
 
   // (Optional but good): Global request validation for DTOs
   app.useGlobalPipes(
@@ -32,7 +37,7 @@ async function bootstrap() {
   // Listen on your configured port
   const port = process.env.PORT || 3001;
   await app.listen(port);
-  console.log(`Backend running on http://localhost:${port}`);
+
 }
 
 bootstrap();

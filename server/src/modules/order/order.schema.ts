@@ -22,8 +22,17 @@ const OrderItemSchema = SchemaFactory.createForClass(OrderItem);
 
 @Schema({ timestamps: true })
 export class Order {
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: false })
   user: Types.ObjectId;
+
+  @Prop({ type: Object, required: false })
+  guestInfo?: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    fullName: string;
+  };
 
   @Prop({ type: [OrderItemSchema], required: true })
   items: OrderItem[];
@@ -31,10 +40,16 @@ export class Order {
   @Prop({ required: true })
   shippingAddress: string;
 
+  @Prop()
+  addressLabel: string;
+
+  @Prop()
+  addressId: string;
+
   @Prop({ required: true })
   totalPrice: number;
 
-  @Prop({ enum: ['pending', 'confirmed', 'shipped', 'delivered'], default: 'pending' })
+  @Prop({ enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'], default: 'pending' })
   status: string;
 
   @Prop({ default: 'cash' })

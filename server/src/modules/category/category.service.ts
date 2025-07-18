@@ -10,7 +10,8 @@ export class CategoryService {
   ) {}
 
   async create(categoryData: Partial<Category>): Promise<Category> {
-    return this.categoryModel.create(categoryData);
+    const category = await this.categoryModel.create(categoryData);
+    return category;
   }
 
   async findAll(): Promise<Category[]> {
@@ -26,6 +27,7 @@ export class CategoryService {
   async update(id: string, update: Partial<Category>): Promise<Category> {
     const category = await this.categoryModel.findByIdAndUpdate(id, update, { new: true }).exec();
     if (!category) throw new NotFoundException('Category not found');
+    
     return category;
   }
 

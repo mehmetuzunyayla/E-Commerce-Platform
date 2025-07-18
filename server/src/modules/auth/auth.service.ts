@@ -18,6 +18,7 @@ export class AuthService {
     if (existingUser) throw new ConflictException('Email already in use');
     const hashed = await bcrypt.hash(registerDto.password, 10);
     const emailVerificationToken = randomBytes(32).toString('hex');
+    
     const user = await this.userService.create({
       ...registerDto,
       password: hashed,
@@ -26,7 +27,7 @@ export class AuthService {
     });
 
     // Send verification email
-    const verifyUrl = `${process.env.BACKEND_URL}/auth/verify-email?token=${emailVerificationToken}`;
+    const verifyUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email?token=${emailVerificationToken}`;
     await this.emailService.sendMail(
       user.email,
       'Verify Your Email',
@@ -55,7 +56,7 @@ export class AuthService {
   async login(user: any) {
     const payload = { sub: user._id, email: user.email, role: user.role };
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
       user,
     };
   }

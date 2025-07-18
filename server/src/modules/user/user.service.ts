@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from './user.schema';
+import { User, UserDocument, Address } from './user.schema';
 
 @Injectable()
 export class UserService {
@@ -40,5 +40,51 @@ export class UserService {
   async delete(id: string): Promise<void> {
     const res = await this.userModel.findByIdAndDelete(id).exec();
     if (!res) throw new NotFoundException('User not found');
+  }
+
+  // Address management methods
+  async getAddresses(userId: string): Promise<Address[]> {
+    const user = await this.findById(userId);
+    return user.addresses || [];
+  }
+
+  async addAddress(userId: string, addressData: Partial<Address>): Promise<User> {
+    const result = await this.userModel.findByIdAndUpdate(
+      userId,
+      { $push: { addresses: addressData } },
+      { new: true }
+    ).exec();
+    
+    if (!result) throw new NotFoundException('User not found');
+    return result;
+  }
+
+  async updateAddress(userId: string, addressId: string, addressData: Partial<Address>): Promise<User> {
+    const result = await this.userModel.findOneAndUpdate(
+      { 
+        _id: userId, 
+        'addresses._id': addressId 
+      },
+      { 
+        $set: { 
+          'addresses.$': { ...addressData, _id: addressId } 
+        } 
+      },
+      { new: true }
+    ).exec();
+    
+    if (!result) throw new NotFoundException('Address not found');
+    return result;
+  }
+
+  async deleteAddress(userId: string, addressId: string): Promise<User> {
+    const result = await this.userModel.findByIdAndUpdate(
+      userId,
+      { $pull: { addresses: { _id: addressId } } },
+      { new: true }
+    ).exec();
+    
+    if (!result) throw new NotFoundException('User not found');
+    return result;
   }
 }

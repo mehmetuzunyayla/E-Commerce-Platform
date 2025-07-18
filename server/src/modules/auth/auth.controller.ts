@@ -11,7 +11,10 @@ export class AuthController {
   @Post('register')
   async register(@Body() registerDto: any) {
     const user = await this.authService.register(registerDto);
-    return { message: 'Registration successful. Please verify your email.', user };
+    return { 
+      message: 'Registration successful. Please verify your email.', 
+      user: user
+    };
   }
 
   @HttpCode(HttpStatus.OK)
