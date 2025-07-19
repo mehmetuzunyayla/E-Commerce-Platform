@@ -55,8 +55,8 @@ A full-stack e-commerce application built with Next.js (frontend) and NestJS (ba
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
-cd e-commerce-app
+git clone https://github.com/mehmetuzunyayla/E-Commerce-Platform.git
+cd E-Commerce-Platform
 ```
 
 ### 2. Install Dependencies
@@ -77,14 +77,19 @@ npm install
 
 #### Frontend (.env.local)
 ```env
-NEXT_PUBLIC_BACKEND_URL=http://localhost:3001/api
+BACKEND_URL=http://localhost:3001
 ```
 
 #### Backend (.env)
 ```env
 MONGODB_URI=mongodb://localhost:27017/ecommerce
-JWT_SECRET=your-super-secret-jwt-key
-PORT=3001
+SMTP_HOST=sandbox.smtp.mailtrap.io
+SMTP_PORT=2525
+SMTP_USER=0297b80951df3a
+SMTP_PASS=00f2cd25c5ed28
+SMTP_FROM=ecommerce@example.com
+FRONTEND_URL=http://localhost:3000
+BACKEND_URL=http://localhost:3001
 ```
 
 ### 4. Database Setup
@@ -247,30 +252,22 @@ e-commerce-app/
 
 ### Frontend (.env.local)
 ```env
-NEXT_PUBLIC_BACKEND_URL=https://your-backend-url.com/api
+BACKEND_URL=http://localhost:3001
 ```
 
 ### Backend (.env)
 ```env
 MONGODB_URI=mongodb://localhost:27017/ecommerce
-JWT_SECRET=your-super-secret-jwt-key
-PORT=3001
-NODE_ENV=development
+SMTP_HOST=sandbox.smtp.mailtrap.io
+SMTP_PORT=2525
+SMTP_USER=0297b80951df3a
+SMTP_PASS=00f2cd25c5ed28
+SMTP_FROM=ecommerce@example.com
+FRONTEND_URL=http://localhost:3000
+BACKEND_URL=http://localhost:3001
 ```
 
-## 🧪 Testing
 
-### Frontend Testing
-```bash
-cd client
-npm run test
-```
-
-### Backend Testing
-```bash
-cd server
-npm run test
-```
 
 ## 📊 Database Schema
 
@@ -327,7 +324,7 @@ npm run test
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests if applicable
+4. Submit your changes
 5. Submit a pull request
 
 ## 📄 License
