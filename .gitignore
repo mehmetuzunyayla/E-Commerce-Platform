@@ -40,7 +40,7 @@ Thumbs.db
 .DS_Store
 
 # Uploaded files
-uploads/
+#uploads/
 public/uploads/
 
 # Dependency directories in subfolders
@@ -66,8 +66,3 @@ yarn-error.log*
 
 # Misc
 *.local
-
-
-
-info.txt
-api_test.txt
