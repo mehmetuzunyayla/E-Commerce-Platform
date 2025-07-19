@@ -85,8 +85,8 @@ BACKEND_URL=http://localhost:3001
 MONGODB_URI=mongodb://localhost:27017/ecommerce
 SMTP_HOST=sandbox.smtp.mailtrap.io
 SMTP_PORT=2525
-SMTP_USER=0297b80951df3a
-SMTP_PASS=00f2cd25c5ed28
+SMTP_USER=your-mailtrap-username
+SMTP_PASS=your-mailtrap-password
 SMTP_FROM=ecommerce@example.com
 FRONTEND_URL=http://localhost:3000
 BACKEND_URL=http://localhost:3001
@@ -162,14 +162,19 @@ e-commerce-app/
 ### Authentication
 - `POST /auth/register` - User registration
 - `POST /auth/login` - User login
-- `GET /auth/profile` - Get user profile
+- `POST /auth/me` - Get user profile
+- `POST /auth/verify-email` - Email verification
+- `GET /auth/verify-email` - Email verification via GET
 
 ### Products
 - `GET /products` - Get all products
 - `GET /products/:id` - Get product by ID
+- `GET /products/count` - Get total product count
 - `POST /products` - Create product (Admin)
 - `PATCH /products/:id` - Update product (Admin)
 - `DELETE /products/:id` - Delete product (Admin)
+- `POST /products/temp-upload` - Upload image for new product (Admin)
+- `POST /products/:id/upload-image` - Upload image for existing product (Admin)
 
 ### Categories
 - `GET /categories` - Get all categories
@@ -179,7 +184,9 @@ e-commerce-app/
 
 ### Cart
 - `GET /carts` - Get user cart
+- `GET /carts/guest` - Get guest cart
 - `POST /carts/items` - Add item to cart
+- `POST /carts/guest/items` - Add item to guest cart
 - `PATCH /carts/items/:productId` - Update cart item
 - `DELETE /carts/items/:productId` - Remove item from cart
 - `DELETE /carts/clear` - Clear cart
@@ -192,15 +199,19 @@ e-commerce-app/
 - `PATCH /orders/:id` - Update order status (Admin)
 
 ### Reviews
+- `GET /reviews` - Get all reviews
 - `GET /reviews/product/:productId` - Get product reviews
+- `GET /reviews/can-review/:productId` - Check if user can review product
 - `POST /reviews` - Create review
 - `PATCH /reviews/:id` - Update review
 - `DELETE /reviews/:id` - Delete review
 
 ### Wishlist
 - `GET /wishlist` - Get user wishlist
-- `POST /wishlist` - Add to wishlist
-- `DELETE /wishlist/:productId` - Remove from wishlist
+- `POST /wishlist` - Update wishlist
+- `POST /wishlist/add/:productId` - Add to wishlist
+- `DELETE /wishlist/remove/:productId` - Remove from wishlist
+- `DELETE /wishlist/clear` - Clear wishlist
 
 ## 🎨 Features Overview
 
